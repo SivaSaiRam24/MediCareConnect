@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <a href="user-dashboard.html" class="dashboard-btn">
+    🏠 Dashboard
+</a>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Become a Donor | MediCare Connect</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    font-family: Arial, sans-serif;
+    background: #fff5f5;
+    padding: 30px 15px;
+}
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 5px 20px #0001;
+}
+h1 { color: #087f8c; text-align: center; }
+label { display: block; margin-top: 15px; font-weight: bold; }
+input, select {
+    width: 100%; padding: 12px; margin-top: 7px;
+    border: 1px solid #ccc; border-radius: 7px;
+}
+button {
+    width: 100%; padding: 14px; margin-top: 22px;
+    background: #087f8c; color: white; border: none;
+    border-radius: 8px; cursor: pointer;
+}
+.back { display: block; text-align: center; margin-top: 20px; }
+.dashboard-btn {
+    display: inline-block;
+    background: #007bff;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.dashboard-btn:hover {
+    background: #0056b3;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🩸 Become a Donor</h1>
+<p>Register your interest in donating blood.</p>
+
+<form onsubmit="submitForm(event, 'Donor registration')">
+<label>Full Name *</label>
+<input type="text" name="name" required>
+
+<label>Age *</label>
+<input type="number" name="age" min="18" max="100" required>
+
+<label>Phone Number *</label>
+<input type="tel" name="phone" pattern="[0-9]{10}" maxlength="10" required>
+
+<label>Email</label>
+<input type="email" name="email">
+
+<label>Blood Group *</label>
+<select name="bloodGroup" required>
+<option value="">Select Blood Group</option>
+<option>A+</option><option>A-</option>
+<option>B+</option><option>B-</option>
+<option>O+</option><option>O-</option>
+<option>AB+</option><option>AB-</option>
+</select>
+
+<label>City / Village *</label>
+<input type="text" name="location" required>
+
+<button type="submit">Register as Donor</button>
+</form>
+
+<a class="back" href="index.html">← Back to Home</a>
+</div>
+
+<script>
+function submitForm(event, formName) {
+    event.preventDefault();
+    alert(formName + " submitted successfully! (Demo only)");
+    event.target.reset();
+}
+</script>
+</body>
+</html>

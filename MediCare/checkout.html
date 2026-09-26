@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MediCare Connect | Checkout</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #edf9f8;
+      color: #173b46;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+
+    header {
+      background: white;
+      border-top: 5px solid #4b3434;
+      border-bottom: 1px solid #e2eeee;
+      padding: 25px 6%;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: bold;
+      color: #078c95;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #173b46;
+    }
+
+    /* MAIN */
+
+    .container {
+      max-width: 900px;
+      margin: 45px auto;
+      padding: 0 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #078c95;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+      margin-bottom: 25px;
+    }
+
+    .checkout-card {
+      background: white;
+      padding: 45px;
+      border-radius: 25px;
+      box-shadow: 0 15px 50px #00000008;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* PACKAGE SUMMARY */
+
+    .package-box {
+      background: #eaf8f7;
+      padding: 28px 25px;
+      border-radius: 17px;
+      margin-bottom: 30px;
+    }
+
+    .package-box h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      color: #078c95;
+      font-size: 38px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .price span {
+      font-size: 17px;
+      font-weight: normal;
+      color: #475569;
+    }
+
+    .description {
+      color: #64748b;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* FORM */
+
+    .form-section h2 {
+      margin-bottom: 22px;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 9px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #078c95;
+      box-shadow: 0 0 0 3px #078c9520;
+    }
+
+    /* NOTICE */
+
+    .notice {
+      background: #fff8e6;
+      border-left: 4px solid #e8aa25;
+      padding: 16px;
+      margin: 25px 0;
+      border-radius: 8px;
+      color: #785719;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* BUTTONS */
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 17px;
+      background: #078c95;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #076d75;
+    }
+
+    .btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .secondary-btn {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      padding: 14px;
+      border: 1px solid #078c95;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #078c95;
+      font-weight: bold;
+    }
+
+    .secondary-btn:hover {
+      background: #eaf8f7;
+    }
+
+    /* MESSAGE */
+
+    .message {
+      display: none;
+      padding: 18px;
+      border-radius: 10px;
+      margin-top: 22px;
+      line-height: 1.7;
+    }
+
+    .success {
+      display: block;
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #64748b;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 22px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .container {
+        margin: 25px auto;
+        padding: 0 15px;
+      }
+
+      .checkout-card {
+        padding: 25px 20px;
+        border-radius: 18px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
+
+      .price {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+    <a href="index.html" class="logo">
+      ✚ MediCare <span>Connect</span>
+    </a>
+  </header>
+
+  <!-- CHECKOUT CONTENT -->
+
+  <main class="container">
+
+    <a href="subscription.html" class="back-link">
+      ← Back to Packages
+    </a>
+
+    <div class="checkout-card">
+
+      <h1>Complete Your Subscription</h1>
+
+      <p class="subtitle">
+        Enter your details and continue to the demo checkout.
+      </p>
+
+      <!-- PACKAGE DETAILS -->
+
+      <div class="package-box">
+
+        <h2 id="packageName">
+          No package selected
+        </h2>
+
+        <div class="price">
+          <span id="packagePrice"
+                style="font-size:38px;font-weight:bold;color:#078c95;">
+            ₹0
+          </span>
+
+          <span>/ month*</span>
+        </div>
+
+        <p class="description" id="packageDescription">
+          Please select a package to view its details.
+        </p>
+
+      </div>
+
+      <!-- CUSTOMER DETAILS -->
+
+      <div class="form-section" id="formSection">
+
+        <h2>Customer Details</h2>
+
+        <form id="checkoutForm">
+
+          <div class="form-group">
+            <label for="customerName">Full Name</label>
+            <input
+              type="text"
+              id="customerName"
+              placeholder="Enter your full name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="customerEmail">Email Address</label>
+            <input
+              type="email"
+              id="customerEmail"
+              placeholder="Enter your email address"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="customerPhone">Phone Number</label>
+            <input
+              type="tel"
+              id="customerPhone"
+              placeholder="Enter 10-digit mobile number"
+              pattern="[0-9]{10}"
+              maxlength="10"
+              required
+            >
+          </div>
+
+          <div class="notice">
+            <strong>Demo checkout only.</strong>
+            This page does not process real payments.
+            Do not enter card numbers, UPI PINs, or banking
+            passwords. Actual payments require a verified
+            payment gateway.
+          </div>
+
+          <button type="submit" class="btn" id="checkoutBtn">
+            Confirm Demo Subscription
+          </button>
+
+        </form>
+
+      </div>
+
+      <!-- RESULT -->
+
+      <div id="message" class="message"></div>
+
+      <a href="subscription.html" class="secondary-btn">
+        Choose Another Package
+      </a>
+
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 MediCare Connect | Your Health, Our Priority
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    // Available packages
+
+    const packages = {
+      "Basic Care": {
+        price: 499,
+        description:
+          "Monthly medicine delivery, refill reminders, basic customer support, and delivery subject to availability."
+      },
+
+      "Family Care": {
+        price: 999,
+        description:
+          "Multiple patient profiles, monthly medicine delivery, refill and delivery reminders, and consultation booking support."
+      },
+
+      "Senior Care": {
+        price: 799,
+        description:
+          "Medicine delivery assistance, refill reminders, caregiver contact support, and consultation scheduling assistance."
+      }
+    };
+
+    // Read selected package
+
+    const selectedPackage = JSON.parse(
+      localStorage.getItem("medicare_selected_package") || "null"
+    );
+
+    const packageNameElement =
+      document.getElementById("packageName");
+
+    const packagePriceElement =
+      document.getElementById("packagePrice");
+
+    const packageDescriptionElement =
+      document.getElementById("packageDescription");
+
+    const checkoutBtn =
+      document.getElementById("checkoutBtn");
+
+    const checkoutForm =
+      document.getElementById("checkoutForm");
+
+    const message =
+      document.getElementById("message");
+
+    let activePackage = null;
+
+    // Display package
+
+    if (
+      selectedPackage &&
+      packages[selectedPackage.name] &&
+      Number(selectedPackage.price) ===
+        packages[selectedPackage.name].price
+    ) {
+
+      activePackage = packages[selectedPackage.name];
+
+      packageNameElement.textContent =
+        selectedPackage.name;
+
+      packagePriceElement.textContent =
+        "₹" + activePackage.price;
+
+      packageDescriptionElement.textContent =
+        activePackage.description;
+
+    } else {
+
+      packageNameElement.textContent =
+        "No package selected";
+
+      packagePriceElement.textContent = "₹0";
+
+      packageDescriptionElement.textContent =
+        "Please return to the packages page and select a package.";
+
+      checkoutBtn.disabled = true;
+
+      checkoutBtn.textContent = "Select a Package First";
+
+    }
+
+    // Autofill logged-in user details
+
+    const session = JSON.parse(
+      localStorage.getItem("medicare_demo_session") || "null"
+    );
+
+    if (session && session.role === "user") {
+
+      document.getElementById("customerName").value =
+        session.name || "";
+
+      document.getElementById("customerEmail").value =
+        session.email || "";
+
+    }
+
+    // Submit demo checkout
+
+    checkoutForm.addEventListener("submit", function(event) {
+
+      event.preventDefault();
+
+      if (!activePackage) {
+        message.className = "message error";
+        message.textContent =
+          "Please select a valid package first.";
+        return;
+      }
+
+      const name =
+        document.getElementById("customerName").value.trim();
+
+      const email =
+        document.getElementById("customerEmail").value.trim().toLowerCase();
+
+      const phone =
+        document.getElementById("customerPhone").value.trim();
+
+      if (!name || !email || !/^[0-9]{10}$/.test(phone)) {
+        message.className = "message error";
+        message.textContent =
+          "Please enter valid customer details and a 10-digit mobile number.";
+        return;
+      }
+
+      // Save demo subscription separately for each email
+
+      const subscriptions = JSON.parse(
+        localStorage.getItem("medicare_subscriptions") || "{}"
+      );
+
+      subscriptions[email] = {
+        name: name,
+        email: email,
+        phone: phone,
+        package: selectedPackage.name,
+        price: activePackage.price,
+        date: new Date().toLocaleDateString(),
+        status: "Demo Subscription Selected"
+      };
+
+      localStorage.setItem(
+        "medicare_subscriptions",
+        JSON.stringify(subscriptions)
+      );
+
+      // Show confirmation
+
+      message.className = "message success";
+
+      message.innerHTML =
+        "<strong>Subscription selected successfully!</strong><br>" +
+        "Customer: " + escapeHTML(name) + "<br>" +
+        "Package: " + escapeHTML(selectedPackage.name) + "<br>" +
+        "Amount: ₹" + activePackage.price + "/month<br>" +
+        "Status: Demo only — no payment was charged.";
+
+      checkoutBtn.textContent = "Subscription Selected";
+      checkoutBtn.disabled = true;
+
+    });
+
+    // Safe text for confirmation
+
+    function escapeHTML(value) {
+      return value.replace(/[&<>"']/g, function(char) {
+        const entities = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;"
+        };
+
+        return entities[char];
+      });
+    }
+
+  </script>
+
+</body>
+</html>

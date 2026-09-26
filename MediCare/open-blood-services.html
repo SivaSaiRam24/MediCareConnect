@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blood Services Management | MediCare Connect</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        header {
+            background: #087f8c;
+            color: white;
+            padding: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            background: #06636d;
+            padding: 10px 18px;
+            border-radius: 6px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #00000010;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .stat-card p {
+            font-size: 30px;
+            font-weight: bold;
+            color: #087f8c;
+            margin-top: 12px;
+        }
+
+        .section {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-top: 25px;
+            box-shadow: 0 3px 10px #00000010;
+        }
+
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #087f8c;
+            color: white;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 3px;
+            color: white;
+        }
+
+        .approve {
+            background: #16803c;
+        }
+
+        .delete {
+            background: #dc3545;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #777;
+        }
+
+        .notice {
+            background: #fff3cd;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: #664d03;
+            line-height: 1.5;
+        }
+
+        @media(max-width: 600px) {
+            .container {
+                padding: 12px;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>🏥 MediCare Connect</h2>
+    <a href="admin-dashboard.html">
+        ← Back to Dashboard
+    </a>
+</header>
+
+<div class="container">
+
+    <h1>🩸 Blood Services Management</h1>
+    <p>Manage donor registrations and blood assistance requests.</p>
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <h3>Total Donors</h3>
+            <p id="totalDonors">0</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Total Blood Requests</h3>
+            <p id="totalRequests">0</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Pending Donors</h3>
+            <p id="pendingDonors">0</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Pending Requests</h3>
+            <p id="pendingRequests">0</p>
+        </div>
+
+    </div>
+
+    <!-- DONORS SECTION -->
+
+    <div class="section">
+
+        <h2>🩸 Registered Blood Donors</h2>
+
+        <div class="filters">
+
+            <input
+                type="text"
+                id="donorSearch"
+                placeholder="Search donor name or blood group..."
+                oninput="loadBloodServices()"
+            >
+
+            <select id="bloodGroupFilter"
+                    onchange="loadBloodServices()">
+
+                <option value="All">All Blood Groups</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+
+            </select>
+
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Blood Group</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="donorsTable"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- BLOOD REQUESTS SECTION -->
+
+    <div class="section">
+
+        <h2>🚨 Blood Assistance Requests</h2>
+
+        <div class="filters">
+
+            <input
+                type="text"
+                id="requestSearch"
+                placeholder="Search patient or blood group..."
+                oninput="loadBloodServices()"
+            >
+
+            <select id="requestStatusFilter"
+                    onchange="loadBloodServices()">
+
+                <option value="All">All Requests</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Fulfilled">Fulfilled</option>
+
+            </select>
+
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Contact</th>
+                        <th>Blood Group</th>
+                        <th>Units</th>
+                        <th>Hospital / Location</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="requestsTable"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="notice">
+        <strong>Note:</strong> This is a browser-based demo.
+        Donor and request records must use the same localStorage
+        keys as the registration and request forms to appear here.
+    </div>
+
+</div>
+
+<script src="auth.js"></script>
+
+<script>
+    // Admin authentication
+    const adminSession = protectDashboard("admin");
+
+    /*
+       IMPORTANT:
+       Update these keys to match the keys used
+       in your blood registration/request forms.
+    */
+
+    const DONOR_KEY = "medicare_blood_donors";
+    const REQUEST_KEY = "medicare_blood_requests";
+
+    function getData(key) {
+        try {
+            const data = JSON.parse(
+                localStorage.getItem(key) || "[]"
+            );
+
+            return Array.isArray(data) ? data : [];
+        } catch (error) {
+            console.error("Invalid localStorage data:", key);
+            return [];
+        }
+    }
+
+    function saveData(key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    function loadBloodServices() {
+
+        const donors = getData(DONOR_KEY);
+        const requests = getData(REQUEST_KEY);
+
+        // Statistics
+        document.getElementById("totalDonors").textContent =
+            donors.length;
+
+        document.getElementById("totalRequests").textContent =
+            requests.length;
+
+        document.getElementById("pendingDonors").textContent =
+            donors.filter(d =>
+                (d.status || "Pending") === "Pending"
+            ).length;
+
+        document.getElementById("pendingRequests").textContent =
+            requests.filter(r =>
+                (r.status || "Pending") === "Pending"
+            ).length;
+
+        // Donor filtering
+        const donorSearch =
+            document.getElementById("donorSearch")
+                .value.toLowerCase();
+
+        const bloodGroup =
+            document.getElementById("bloodGroupFilter").value;
+
+        const filteredDonors = donors.filter(d => {
+
+            const name = d.name || d.fullName || d.donorName || "";
+            const group = d.bloodGroup || d.blood || "";
+
+            const matchesSearch =
+                name.toLowerCase().includes(donorSearch) ||
+                group.toLowerCase().includes(donorSearch);
+
+            const matchesGroup =
+                bloodGroup === "All" || group === bloodGroup;
+
+            return matchesSearch && matchesGroup;
+        });
+
+        const donorsTable =
+            document.getElementById("donorsTable");
+
+        donorsTable.innerHTML = "";
+
+        if (filteredDonors.length === 0) {
+            donorsTable.innerHTML = `
+                <tr>
+                    <td colspan="7" class="empty">
+                        No donor registrations found.
+                    </td>
+                </tr>
+            `;
+        }
+
+        filteredDonors.forEach(d => {
+
+            const row = document.createElement("tr");
+
+            function addCell(value) {
+                const td = document.createElement("td");
+                td.textContent = value || "N/A";
+                row.appendChild(td);
+            }
+
+            addCell(d.name || d.fullName || d.donorName);
+            addCell(d.phone || d.phoneNumber);
+            addCell(d.email);
+            addCell(d.bloodGroup || d.blood);
+            addCell(d.location || d.city || d.address);
+
+            const statusCell = document.createElement("td");
+            statusCell.textContent = d.status || "Pending";
+            row.appendChild(statusCell);
+
+            const action = document.createElement("td");
+
+            if ((d.status || "Pending") === "Pending") {
+                const approveBtn =
+                    document.createElement("button");
+
+                approveBtn.textContent = "Approve";
+                approveBtn.className = "approve";
+
+                approveBtn.onclick = () => {
+                    updateDonorStatus(d.id, "Approved");
+                };
+
+                action.appendChild(approveBtn);
+            }
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "delete";
+
+            deleteBtn.onclick = () => {
+                deleteDonor(d.id);
+            };
+
+            action.appendChild(deleteBtn);
+            row.appendChild(action);
+
+            donorsTable.appendChild(row);
+        });
+
+        // Blood requests filtering
+        const requestSearch =
+            document.getElementById("requestSearch")
+                .value.toLowerCase();
+
+        const requestFilter =
+            document.getElementById("requestStatusFilter").value;
+
+        const filteredRequests = requests.filter(r => {
+
+            const name =
+                r.patientName || r.name || r.fullName || "";
+
+            const group =
+                r.bloodGroup || r.blood || "";
+
+            const matchesSearch =
+                name.toLowerCase().includes(requestSearch) ||
+                group.toLowerCase().includes(requestSearch);
+
+            const matchesStatus =
+                requestFilter === "All" ||
+                (r.status || "Pending") === requestFilter;
+
+            return matchesSearch && matchesStatus;
+        });
+
+        const requestsTable =
+            document.getElementById("requestsTable");
+
+        requestsTable.innerHTML = "";
+
+        if (filteredRequests.length === 0) {
+            requestsTable.innerHTML = `
+                <tr>
+                    <td colspan="7" class="empty">
+                        No blood requests found.
+                    </td>
+                </tr>
+            `;
+        }
+
+        filteredRequests.forEach(r => {
+
+            const row = document.createElement("tr");
+
+            function addCell(value) {
+                const td = document.createElement("td");
+                td.textContent = value || "N/A";
+                row.appendChild(td);
+            }
+
+            addCell(r.patientName || r.name || r.fullName);
+            addCell(r.phone || r.phoneNumber);
+            addCell(r.bloodGroup || r.blood);
+            addCell(r.units || r.quantity);
+            addCell(r.hospital || r.location || r.city);
+
+            const statusCell = document.createElement("td");
+            statusCell.textContent = r.status || "Pending";
+            row.appendChild(statusCell);
+
+            const action = document.createElement("td");
+
+            if ((r.status || "Pending") === "Pending") {
+
+                const approveBtn =
+                    document.createElement("button");
+
+                approveBtn.textContent = "Approve";
+                approveBtn.className = "approve";
+
+                approveBtn.onclick = () => {
+                    updateRequestStatus(r.id, "Approved");
+                };
+
+                action.appendChild(approveBtn);
+            }
+
+            if ((r.status || "Pending") === "Approved") {
+
+                const fulfilledBtn =
+                    document.createElement("button");
+
+                fulfilledBtn.textContent = "Fulfilled";
+                fulfilledBtn.className = "approve";
+
+                fulfilledBtn.onclick = () => {
+                    updateRequestStatus(r.id, "Fulfilled");
+                };
+
+                action.appendChild(fulfilledBtn);
+            }
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.className = "delete";
+
+            deleteBtn.onclick = () => {
+                deleteRequest(r.id);
+            };
+
+            action.appendChild(deleteBtn);
+            row.appendChild(action);
+
+            requestsTable.appendChild(row);
+        });
+    }
+
+    // Update donor status
+    function updateDonorStatus(id, status) {
+
+        let donors = getData(DONOR_KEY);
+
+        donors = donors.map(d => {
+            if (String(d.id) === String(id)) {
+                return { ...d, status: status };
+            }
+            return d;
+        });
+
+        saveData(DONOR_KEY, donors);
+        loadBloodServices();
+    }
+
+    // Delete donor
+    function deleteDonor(id) {
+
+        if (!confirm("Delete this donor registration?")) {
+            return;
+        }
+
+        let donors = getData(DONOR_KEY);
+
+        donors = donors.filter(
+            d => String(d.id) !== String(id)
+        );
+
+        saveData(DONOR_KEY, donors);
+        loadBloodServices();
+    }
+
+    // Update request status
+    function updateRequestStatus(id, status) {
+
+        let requests = getData(REQUEST_KEY);
+
+        requests = requests.map(r => {
+            if (String(r.id) === String(id)) {
+                return { ...r, status: status };
+            }
+            return r;
+        });
+
+        saveData(REQUEST_KEY, requests);
+        loadBloodServices();
+    }
+
+    // Delete blood request
+    function deleteRequest(id) {
+
+        if (!confirm("Delete this blood assistance request?")) {
+            return;
+        }
+
+        let requests = getData(REQUEST_KEY);
+
+        requests = requests.filter(
+            r => String(r.id) !== String(id)
+        );
+
+        saveData(REQUEST_KEY, requests);
+        loadBloodServices();
+    }
+
+    if (adminSession) {
+        loadBloodServices();
+    }
+</script>
+
+</body>
+</html>

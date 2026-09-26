@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MediCare Connect | Monthly Medicine Packages</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #edf9f8;
+      color: #173b46;
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+
+    header {
+      background: #ffffff;
+      border-top: 5px solid #4b3434;
+      border-bottom: 1px solid #e2eeee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      max-width: 1400px;
+      margin: auto;
+      padding: 17px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 29px;
+      font-weight: bold;
+      color: #078c95;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: #173b46;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #173b46;
+      font-weight: 600;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #078c95;
+    }
+
+    .nav-links .nav-btn {
+      background: #078c95;
+      color: white;
+      padding: 18px 27px;
+      border-radius: 12px;
+    }
+
+    .nav-links .nav-btn:hover {
+      background: #076d75;
+      color: white;
+    }
+
+    /* PAGE INTRO */
+
+    .container {
+      max-width: 1400px;
+      margin: auto;
+      padding: 0 30px;
+    }
+
+    .intro {
+      text-align: center;
+      padding: 60px 15px 30px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #d6f4f1;
+      color: #078c95;
+      padding: 10px 18px;
+      border-radius: 25px;
+      font-weight: bold;
+      margin-bottom: 28px;
+    }
+
+    .intro h1 {
+      font-size: 46px;
+      margin-bottom: 22px;
+      color: #173b46;
+    }
+
+    .intro p {
+      max-width: 850px;
+      margin: auto;
+      font-size: 19px;
+      line-height: 1.7;
+      color: #64748b;
+    }
+
+    /* PACKAGE CARDS */
+
+    .packages {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+      margin: 25px auto 30px;
+      align-items: stretch;
+    }
+
+    .package {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      padding: 40px 35px;
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s ease;
+      box-shadow: 0 10px 35px #00000005;
+    }
+
+    .package:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 40px #00000012;
+    }
+
+    .package.popular {
+      border: 2px solid #078c95;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #078c95;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .package h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #173b46;
+    }
+
+    .package .description {
+      color: #64748b;
+      font-size: 17px;
+      line-height: 1.7;
+      min-height: 55px;
+    }
+
+    .price {
+      margin: 32px 0;
+      color: #078c95;
+      font-size: 44px;
+      font-weight: bold;
+    }
+
+    .price span {
+      color: #475569;
+      font-size: 17px;
+      font-weight: normal;
+    }
+
+    .package ul {
+      list-style: none;
+      margin-bottom: 30px;
+      flex-grow: 1;
+    }
+
+    .package li {
+      margin-bottom: 16px;
+      font-size: 17px;
+      color: #475569;
+      line-height: 1.5;
+    }
+
+    .package li::before {
+      content: "✓ ";
+      color: #078c95;
+      font-weight: bold;
+      font-size: 19px;
+    }
+
+    .choose-btn {
+      background: #078c95;
+      color: white;
+      border: none;
+      border-radius: 11px;
+      padding: 17px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      width: fit-content;
+      transition: 0.3s;
+    }
+
+    .choose-btn:hover {
+      background: #076d75;
+      transform: translateY(-2px);
+    }
+
+    .disclaimer {
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 30px auto 50px;
+      max-width: 900px;
+    }
+
+    /* SELECTED PACKAGE MESSAGE */
+
+    .message {
+      display: none;
+      text-align: center;
+      background: #dcfce7;
+      color: #166534;
+      padding: 18px;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 700px;
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      padding: 25px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    /* TABLET */
+
+    @media (max-width: 1000px) {
+      .navbar {
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px;
+      }
+
+      .packages {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .intro h1 {
+        font-size: 38px;
+      }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 650px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .navbar {
+        padding: 18px 15px;
+      }
+
+      .logo {
+        font-size: 25px;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .nav-links a {
+        font-size: 14px;
+      }
+
+      .nav-links .nav-btn {
+        padding: 12px 16px;
+      }
+
+      .intro {
+        padding: 40px 5px 25px;
+      }
+
+      .intro h1 {
+        font-size: 31px;
+      }
+
+      .intro p {
+        font-size: 16px;
+      }
+
+      .packages {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .package {
+        padding: 30px 25px;
+      }
+
+      .package h2 {
+        font-size: 23px;
+      }
+
+      .price {
+        font-size: 38px;
+      }
+
+      .package li {
+        font-size: 16px;
+      }
+
+      .choose-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <header>
+    <nav class="navbar">
+
+      <a href="index.html" class="logo">
+        ✚ MediCare <span>Connect</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="user-dashboard.html" class="nav-btn">Dashboard</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- MAIN SECTION -->
+
+  <main class="container">
+
+    <section class="intro">
+
+      <span class="badge">
+        Affordable Healthcare
+      </span>
+
+      <h1>Monthly Medicine Packages</h1>
+
+      <p>
+        Choose a subscription plan that suits your family's
+        regular healthcare needs. Prices below are illustrative
+        and must be finalized based on prescriptions and medicine costs.
+      </p>
+
+    </section>
+
+    <!-- PACKAGE CARDS -->
+
+    <section class="packages">
+
+      <!-- BASIC CARE -->
+
+      <div class="package">
+
+        <h2>Basic Care</h2>
+
+        <p class="description">
+          For individuals with regular medication needs.
+        </p>
+
+        <div class="price">
+          ₹499<span>/month*</span>
+        </div>
+
+        <ul>
+          <li>Monthly medicine delivery</li>
+          <li>Medicine refill reminders</li>
+          <li>Basic customer support</li>
+          <li>Delivery subject to availability</li>
+        </ul>
+
+        <button
+          class="choose-btn"
+          onclick="subscribe('Basic Care', 499)">
+          Choose Basic
+        </button>
+
+      </div>
+
+      <!-- FAMILY CARE -->
+
+      <div class="package popular">
+
+        <span class="popular-badge">
+          POPULAR
+        </span>
+
+        <h2>Family Care</h2>
+
+        <p class="description">
+          For families managing multiple prescriptions.
+        </p>
+
+        <div class="price">
+          ₹999<span>/month*</span>
+        </div>
+
+        <ul>
+          <li>Multiple patient profiles</li>
+          <li>Monthly medicine delivery</li>
+          <li>Refill and delivery reminders</li>
+          <li>Consultation booking support</li>
+        </ul>
+
+        <button
+          class="choose-btn"
+          onclick="subscribe('Family Care', 999)">
+          Choose Family
+        </button>
+
+      </div>
+
+      <!-- SENIOR CARE -->
+
+      <div class="package">
+
+        <h2>Senior Care</h2>
+
+        <p class="description">
+          Designed for elderly people requiring regular care.
+        </p>
+
+        <div class="price">
+          ₹799<span>/month*</span>
+        </div>
+
+        <ul>
+          <li>Medicine delivery assistance</li>
+          <li>Refill reminders</li>
+          <li>Caregiver contact support</li>
+          <li>Consultation scheduling assistance</li>
+        </ul>
+
+        <button
+          class="choose-btn"
+          onclick="subscribe('Senior Care', 799)">
+          Choose Senior
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- MESSAGE -->
+
+    <div id="message" class="message"></div>
+
+    <p class="disclaimer">
+      *Illustrative prices only. Final pricing depends on
+      prescriptions, medicine costs, availability, and applicable
+      service terms. This page is a project demonstration and does
+      not provide medical advice.
+    </p>
+
+  </main>
+
+  <!-- FOOTER -->
+
+  <footer>
+    © 2026 MediCare Connect | Your Health, Our Priority
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    // PACKAGE SELECTION
+
+    function subscribe(packageName, price) {
+
+      // Get the currently logged-in user
+      const session = JSON.parse(
+        localStorage.getItem("medicare_demo_session") || "null"
+      );
+
+      // Require login before choosing a package
+      if (!session || session.role !== "user") {
+
+        alert("Please login or create an account to select a package.");
+
+        localStorage.setItem(
+          "medicare_selected_package",
+          JSON.stringify({
+            name: packageName,
+            price: price
+          })
+        );
+
+        window.location.href = "login.html";
+        return;
+      }
+
+      // Save selected package
+      const selectedPackage = {
+        name: packageName,
+        price: price
+      };
+
+      localStorage.setItem(
+        "medicare_selected_package",
+        JSON.stringify(selectedPackage)
+      );
+
+      // Redirect to checkout
+      window.location.href = "checkout.html";
+
+    }
+
+  </script>
+
+</body>
+</html>

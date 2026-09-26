@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediCare Connect | Healthcare for Every Home</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #087f8c;
+      --dark: #123b46;
+      --light: #eaf8f8;
+      --white: #ffffff;
+      --text: #52636b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: #f8fcfc;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1150px, 92%);
+      margin: auto;
+    }
+
+    /* NAVBAR */
+
+    header {
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 15px #123b4610;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .logo span {
+      color: var(--dark);
+    }
+
+    .nav-contact {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* BUTTONS */
+
+    .btn {
+      display: inline-block;
+      border: none;
+      padding: 13px 24px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      color: white;
+    }
+
+    /* HERO SECTION */
+
+    .hero {
+      background: linear-gradient(120deg, #e5f7f7, #f8fcfc);
+      padding: 85px 0;
+      overflow: hidden;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 55px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #d2f1ee;
+      color: var(--primary);
+      padding: 7px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.15;
+      margin-bottom: 22px;
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      color: var(--text);
+      font-size: 16px;
+      margin-bottom: 28px;
+      max-width: 540px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-image {
+      position: relative;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 430px;
+      object-fit: cover;
+      border-radius: 30px;
+      box-shadow: 0 20px 50px #123b4620;
+    }
+
+    .floating-card {
+      position: absolute;
+      bottom: 25px;
+      left: -25px;
+      background: white;
+      border-radius: 15px;
+      padding: 18px;
+      box-shadow: 0 10px 35px #123b4620;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* CONTACT SECTION */
+
+    .contact-section {
+      background: var(--dark);
+      color: white;
+      padding: 75px 0 25px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .contact-badge {
+      display: inline-block;
+      background: #d2f1ee;
+      color: var(--primary);
+      padding: 7px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .contact-header h2 {
+      font-size: clamp(28px, 4vw, 38px);
+      margin-bottom: 15px;
+    }
+
+    .contact-header p {
+      color: #c5d8dc;
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .contact-card {
+      background: #ffffff0d;
+      border: 1px solid #ffffff20;
+      border-radius: 18px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-6px);
+      background: #ffffff15;
+    }
+
+    .contact-icon {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .contact-card h3 {
+      margin-bottom: 12px;
+      font-size: 19px;
+    }
+
+    .contact-card p,
+    .contact-card a {
+      color: #cbdde1;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card a:hover {
+      color: #6ee7d2;
+    }
+
+    .copyright {
+      border-top: 1px solid #ffffff20;
+      margin-top: 45px;
+      padding-top: 20px;
+      text-align: center;
+      color: #a9c1c6;
+      font-size: 13px;
+    }
+
+    /* RESPONSIVE DESIGN */
+
+    @media (max-width: 850px) {
+      .hero {
+        padding: 55px 0;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero-image img {
+        height: 330px;
+      }
+
+      .floating-card {
+        left: 10px;
+      }
+
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .hero-image img {
+        height: 280px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        text-align: center;
+      }
+
+      .contact-section {
+        padding-top: 50px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#home" class="logo">
+          ✚ MediCare<span> Connect</span>
+        </a>
+
+        <a href="#contact" class="nav-contact">
+          Contact Us
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+
+  <section class="hero" id="home">
+    <div class="container hero-content">
+
+      <div>
+        <span class="tag">
+          Healthcare Made Simple ❤️
+        </span>
+
+        <h1>
+          Smart Healthcare<br>
+          for <span>Every Home.</span>
+        </h1>
+
+        <p>
+          Bringing medicines, trusted doctor support, and emergency
+          blood donation services directly to rural families and
+          senior citizens. Because everyone deserves quality healthcare.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="login.html" class="btn">
+            Login / Sign Up
+          </a>
+
+          <a href="#contact" class="btn btn-outline">
+            Contact Us
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=85"
+          alt="Healthcare professional helping a patient">
+
+        <div class="floating-card">
+          💚 Care at your doorstep<br>
+          <span style="color:#087f8c">
+            Your health, our priority.
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+
+  <section class="contact-section" id="contact">
+    <div class="container">
+
+      <div class="contact-header">
+        <span class="contact-badge">
+          Get In Touch
+        </span>
+
+        <h2>Contact MediCare Connect</h2>
+
+        <p>
+          We are here to help you with your healthcare needs.
+          Reach out to us anytime.
+        </p>
+      </div>
+
+      <div class="contact-container">
+
+        <!-- LOCATION -->
+
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+
+          <h3>Our Location</h3>
+
+          <p>Andhra Pradesh, India</p>
+        </div>
+
+        <!-- EMAIL -->
+
+        <div class="contact-card">
+          <div class="contact-icon">📧</div>
+
+          <h3>Email Us</h3>
+
+          <p>
+            <a href="mailto:medicareconnect@gmail.com">
+              medicareconnect@gmail.com
+            </a>
+          </p>
+        </div>
+
+        <!-- PHONE -->
+
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+
+          <h3>Call Us</h3>
+
+          <p>
+            <a href="tel:+919876543210">
+              +91 98765 43210
+            </a>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- FOOTER -->
+
+      <div class="copyright">
+        <p>
+          © 2026 MediCare Connect. All rights reserved.
+        </p>
+
+        <p style="margin-top:8px">
+          Healthcare coordination and information platform.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

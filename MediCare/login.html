@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Connect - Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #087f5b;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .role-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .login-role-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #087f5b;
+            background: white;
+            color: #087f5b;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .role-btn.active {
+            background: #087f5b;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #087f5b;
+            box-shadow: 0 0 5px rgba(8, 127, 91, 0.2);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 65px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #087f5b;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #087f5b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #056644;
+        }
+
+        #loginMessage {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 22px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #087f5b;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back-home a {
+            color: #555;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .back-home a:hover {
+            color: #087f5b;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="logo">🏥</div>
+
+        <h1>MediCare Connect</h1>
+
+        <p class="subtitle">
+            Login to access your healthcare account
+        </p>
+
+        <form id="loginForm">
+
+            <label class="role-label">Login As</label>
+
+            <div class="login-role-buttons">
+
+                <button
+                    type="button"
+                    class="role-btn active"
+                    onclick="selectRole('admin', this)">
+                    Admin
+                </button>
+
+                <button
+                    type="button"
+                    class="role-btn"
+                    onclick="selectRole('user', this)">
+                    User
+                </button>
+
+            </div>
+
+            <input
+                type="hidden"
+                id="role"
+                name="role"
+                value="admin">
+
+            <div class="form-group">
+
+                <label for="email">Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                    autocomplete="username">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">Password</label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password">
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        onclick="togglePassword()">
+                        Show
+                    </button>
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+
+            <p id="loginMessage" role="status"></p>
+
+        </form>
+
+        <div class="register-link">
+            Don't have an account?
+            <a href="register.html">Register Here</a>
+        </div>
+
+        <div class="back-home">
+            <a href="index.html">← Back to Home</a>
+        </div>
+
+    </div>
+
+    <script src="auth.js"></script>
+
+    <script>
+        function selectRole(role, button) {
+
+            document.getElementById("role").value = role;
+
+            document.querySelectorAll(".role-btn").forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            document.getElementById("loginMessage").textContent = "";
+        }
+
+        function togglePassword() {
+
+            const passwordInput = document.getElementById("password");
+            const toggleButton = document.querySelector(".toggle-password");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                toggleButton.textContent = "Show";
+            }
+        }
+    </script>
+
+</body>
+</html>
